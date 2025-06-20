@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - RR MOBILE ACCESSORIES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --danger: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            padding-bottom: 120px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0f2027, #203a43);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .brand-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .header-icons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-icons i {
+            margin-left: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .menu-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 200;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #0f2027, #203a43);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ddd;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #555;
+            overflow: hidden;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .menu-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .menu-item i {
+            margin-right: 15px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .menu-item.active {
+            background: rgba(67, 97, 238, 0.1);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .logout-btn {
+            color: var(--danger);
+        }
+        
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Main Content */
+        .container {
+            padding: 20px;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-title i {
+            margin-right: 10px;
+        }
+        
+        /* Cart Items */
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .cart-item-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .cart-item-price {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-original-price {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-right: 5px;
+        }
+        
+        .cart-item-discount {
+            font-size: 0.8rem;
+            color: var(--success);
+            font-weight: 500;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .remove-item {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            right: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .summary-label {
+            color: var(--gray);
+        }
+        
+        .summary-value {
+            font-weight: 600;
+        }
+        
+        .summary-total {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .empty-cart i {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .empty-cart h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .empty-cart p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 90;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        
+        .nav-item span {
+            font-size: 0.7rem;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            
+            .cart-summary {
+                position: static;
+                margin-top: 20px;
+            }
+            
+            .action-buttons {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-bars menu-btn"></i>
+            <img src="https://i.ibb.co/mFPrvzHC/0a7ca26b-3215-4990-8d5a-b669b374e12f.png" alt="RR Logo" class="logo">
+            <div class="brand-name">RR MOBILE ACCESSORIES</div>
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-search"></i>
+            <div style="position: relative;">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-name">RR MOBILE ACCESSORIES</div>
+            <i class="fas fa-times close-btn"></i>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="https://i.ibb.co/mFPrvzHC/0a7ca26b-3215-4990-8d5a-b669b374e12f.png" alt="User Avatar" id="userAvatar">
+            </div>
+            <div class="user-info">
+                <h3 id="userName">User Name</h3>
+                <p id="userEmail">user@example.com</p>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-shopping-bag"></i>
+                <span>My Orders</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-heart"></i>
+                <span>Wishlist</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-gift"></i>
+                <span>Offers</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-headset"></i>
+                <span>Help Center</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-info-circle"></i>
+                <span>About Us</span>
+            </div>
+            <div class="menu-item logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <h1 class="page-title"><i class="fas fa-shopping-cart"></i> Your Cart</h1>
+        
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded here from Firebase -->
+            <div class="empty-cart" id="emptyCart">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Your Cart is Empty</h3>
+                <p>Looks like you haven't added anything to your cart yet</p>
+                <button class="btn btn-primary" onclick="window.location.href='index.html'">Continue Shopping</button>
+            </div>
+        </div>
+        
+        <div class="cart-summary" id="cartSummary">
+            <div class="summary-row">
+                <span class="summary-label">Subtotal:</span>
+                <span class="summary-value">₹<span id="subtotal">0</span></span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Shipping:</span>
+                <span class="summary-value">₹<span id="shipping">0</span></span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Discount:</span>
+                <span class="summary-value">-₹<span id="discount">0</span></span>
+            </div>
+            <div class="summary-total">
+                <span class="summary-label">Total:</span>
+                <span class="summary-value">₹<span id="total">0</span></span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-outline" onclick="window.location.href='index.html'">Continue Shopping</button>
+                <button class="btn btn-primary" id="checkoutBtn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+        <div class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Orders</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Wishlist</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-user"></i>
+            <span>Account</span>
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBOlLzr0liPHXEssNXSpY8XozoYPPEeA60",
+            authDomain: "rr-mobile-accessories.firebaseapp.com",
+            databaseURL: "https://rr-mobile-accessories-default-rtdb.firebaseio.com",
+            projectId: "rr-mobile-accessories",
+            storageBucket: "rr-mobile-accessories.appspot.com",
+            messagingSenderId: "261034064103",
+            appId: "1:261034064103:web:b59fbb7118dd7f93868a42",
+            measurementId: "G-28RJEQ3X7H"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        
+        // Telegram Bot Info
+        const BOT_TOKEN = '8059039278:AAFC-fy4GUsgil2EwHxEclwzR8H02SEqvak';
+        const CHAT_ID = '6690653192';
+        
+        // DOM Elements
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        const logoutBtn = document.querySelector('.logout-btn');
+        const cartItems = document.getElementById('cartItems');
+        const emptyCart = document.getElementById('emptyCart');
+        const cartSummary = document.getElementById('cartSummary');
+        const cartCount = document.getElementById('cartCount');
+        const subtotal = document.getElementById('subtotal');
+        const shipping = document.getElementById('shipping');
+        const discount = document.getElementById('discount');
+        const total = document.getElementById('total');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const userAvatar = document.getElementById('userAvatar');
+        
+        // Global variables
+        let cart = [];
+        let products = [];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                } else {
+                    // Load user data
+                    loadUserData(user.uid);
+                    
+                    // Load products
+                    loadProducts();
+                    
+                    // Load cart
+                    loadCart(user.uid);
+                }
+            });
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Load user data from Firebase
+        function loadUserData(userId) {
+            database.ref('users/' + userId).once('value')
+                .then((snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        userName.textContent = userData.name || 'User Name';
+                        userEmail.textContent = userData.email || 'user@example.com';
+                        
+                        // Set avatar with initials if no image
+                        if (!userData.photoURL) {
+                            const initials = userData.name ? userData.name.charAt(0) : 'U';
+                            userAvatar.textContent = initials;
+                            userAvatar.style.fontSize = '1.5rem';
+                            userAvatar.style.color = '#555';
+                        }
+                    }
+                });
+        }
+        
+        // Load products from Firebase
+        function loadProducts() {
+            database.ref('products').once('value')
+                .then((snapshot) => {
+                    products = [];
+                    snapshot.forEach((childSnapshot) => {
+                        const product = childSnapshot.val();
+                        product.id = childSnapshot.key;
+                        products.push(product);
+                    });
+                });
+        }
+        
+        // Load cart from Firebase
+        function loadCart(userId) {
+            database.ref('carts/' + userId + '/items').on('value', (snapshot) => {
+                cart = [];
+                cartItems.innerHTML = '';
+                emptyCart.style.display = 'block';
+                cartSummary.style.display = 'none';
+                
+                if (!snapshot.exists()) {
+                    updateCartCount(0);
+                    return;
+                }
+                
+                emptyCart.style.display = 'none';
+                cartSummary.style.display = 'block';
+                
+                let itemCount = 0;
+                let calculatedSubtotal = 0;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const cartItem = childSnapshot.val();
+                    cartItem.id = childSnapshot.key;
+                    cart.push(cartItem);
+                    
+                    // Find product details
+                    const product = products.find(p => p.id === cartItem.productId);
+                    if (!product) return;
+                    
+                    // Create cart item element
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.dataset.id = cartItem.id;
+                    
+                    const itemPrice = product.price * cartItem.quantity;
+                    calculatedSubtotal += itemPrice;
+                    itemCount += cartItem.quantity;
+                    
+                    cartItemElement.innerHTML = `
+                        <div class="cart-item-image">
+                            <img src="${product.image}" alt="${product.title}">
+                        </div>
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-title">${product.title}</h3>
+                            <div class="cart-item-price">
+                                ${product.originalPrice ? `<span class="cart-item-original-price">₹${product.originalPrice}</span>` : ''}
+                                ₹${product.price}
+                                ${product.discount ? `<span class="cart-item-discount">${product.discount}% off</span>` : ''}
+                            </div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus">-</button>
+                                <input type="number" class="quantity-input" value="${cartItem.quantity}" min="1">
+                                <button class="quantity-btn plus">+</button>
+                            </div>
+                        </div>
+                        <div class="remove-item">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    `;
+                    
+                    // Add event listeners
+                    const minusBtn = cartItemElement.querySelector('.minus');
+                    const plusBtn = cartItemElement.querySelector('.plus');
+                    const quantityInput = cartItemElement.querySelector('.quantity-input');
+                    const removeBtn = cartItemElement.querySelector('.remove-item');
+                    
+                    minusBtn.addEventListener('click', () => updateQuantity(cartItem.id, parseInt(quantityInput.value) - 1));
+                    plusBtn.addEventListener('click', () => updateQuantity(cartItem.id, parseInt(quantityInput.value) + 1));
+                    quantityInput.addEventListener('change', () => updateQuantity(cartItem.id, parseInt(quantityInput.value)));
+                    removeBtn.addEventListener('click', () => removeItem(cartItem.id));
+                    
+                    cartItems.appendChild(cartItemElement);
+                });
+                
+                updateCartCount(itemCount);
+                updateCartSummary(calculatedSubtotal);
+            });
+        }
+        
+        // Update quantity of cart item
+        function updateQuantity(itemId, newQuantity) {
+            if (newQuantity < 1) {
+                removeItem(itemId);
+                return;
+            }
+            
+            const userId = auth.currentUser.uid;
+            database.ref('carts/' + userId + '/items/' + itemId).update({
+                quantity: newQuantity
+            });
+        }
+        
+        // Remove item from cart
+        function removeItem(itemId) {
+            const userId = auth.currentUser.uid;
+            database.ref('carts/' + userId + '/items/' + itemId).remove();
+        }
+        
+        // Update cart count badge
+        function updateCartCount(count) {
+            cartCount.textContent = count;
+            cartCount.style.display = count > 0 ? 'flex' : 'none';
+        }
+        
+        // Update cart summary
+        function updateCartSummary(subtotalValue) {
+            const shippingCost = subtotalValue > 500 ? 0 : 50;
+            const discountValue = subtotalValue > 1000 ? subtotalValue * 0.1 : 0; // 10% discount for orders over 1000
+            const totalValue = subtotalValue + shippingCost - discountValue;
+            
+            subtotal.textContent = subtotalValue.toFixed(2);
+            shipping.textContent = shippingCost.toFixed(2);
+            discount.textContent = discountValue.toFixed(2);
+            total.textContent = totalValue.toFixed(2);
+        }
+        
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            const userId = auth.currentUser.uid;
+            const userEmail = auth.currentUser.email;
+            
+            // Create order in Firebase
+            const orderRef = database.ref('orders').push();
+            const orderId = orderRef.key;
+            const orderDate = firebase.database.ServerValue.TIMESTAMP;
+            
+            // For simplicity, we'll create one order with all cart items
+            // In a real app, you might want to create separate orders per item
+            const orderItems = [];
+            let orderTotal = 0;
+            
+            cart.forEach(item => {
+                const product = products.find(p => p.id === item.productId);
+                if (product) {
+                    orderItems.push({
+                        productId: product.id,
+                        productTitle: product.title,
+                        productImage: product.image,
+                        price: product.price,
+                        quantity: item.quantity,
+                        total: product.price * item.quantity
+                    });
+                    orderTotal += product.price * item.quantity;
+                }
+            });
+            
+            // Calculate shipping and discount
+            const shippingCost = orderTotal > 500 ? 0 : 50;
+            const discountValue = orderTotal > 1000 ? orderTotal * 0.1 : 0;
+            const finalTotal = orderTotal + shippingCost - discountValue;
+            
+            // Create order
+            orderRef.set({
+                userId: userId,
+                userEmail: userEmail,
+                items: orderItems,
+                subtotal: orderTotal,
+                shipping: shippingCost,
+                discount: discountValue,
+                total: finalTotal,
+                status: 'pending',
+                paymentMethod: 'Cash on Delivery', // Default
+                createdAt: orderDate
+            }).then(() => {
+                // Clear cart
+                database.ref('carts/' + userId + '/items').remove();
+                
+                // Send Telegram notification
+                sendTelegramNotification(orderId, orderItems, finalTotal, userEmail);
+                
+                // Redirect to order success page
+                window.location.href = `order-success.html?orderId=${orderId}`;
+            }).catch(error => {
+                alert('Error placing order: ' + error.message);
+            });
+        }
+        
+        // Send Telegram notification
+        function sendTelegramNotification(orderId, items, total, userEmail) {
+            let message = `🛒 *New Order Received* 🛒\n\n`;
+            message += `Order ID: ${orderId}\n`;
+            
+            items.forEach(item => {
+                message += `\nProduct: ${item.productTitle}\n`;
+                message += `Quantity: ${item.quantity}\n`;
+                message += `Price: ₹${item.price}\n`;
+                message += `Total: ₹${item.total}\n`;
+            });
+            
+            message += `\nOrder Total: ₹${total}\n`;
+            message += `Customer Email: ${userEmail}\n`;
+            message += `Order placed at: ${new Date().toLocaleString()}`;
+            
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => console.log('Telegram notification sent:', data))
+                .catch(error => console.error('Error sending Telegram notification:', error));
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Sidebar toggle
+            menuBtn.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', () => {
+                auth.signOut().then(() => {
+                    window.location.href = 'login.html';
+                });
+            });
+            
+            // Checkout
+            checkoutBtn.addEventListener('click', checkout);
+        }
+    </script>
+</body>
+</html>

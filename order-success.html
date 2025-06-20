@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - RR MOBILE ACCESSORIES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --danger: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            padding-bottom: 60px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #0f2027, #203a43);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .brand-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .header-icons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-icons i {
+            margin-left: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .menu-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 200;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #0f2027, #203a43);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ddd;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #555;
+            overflow: hidden;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .menu-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .menu-item i {
+            margin-right: 15px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .menu-item.active {
+            background: rgba(67, 97, 238, 0.1);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .logout-btn {
+            color: var(--danger);
+        }
+        
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Main Content */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Success Card */
+        .success-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--success);
+            font-size: 2.5rem;
+        }
+        
+        .success-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .success-message {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-product {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .product-image {
+            width: 100px;
+            height: 100px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .product-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .product-info {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .product-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .product-quantity {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .order-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .detail-label {
+            color: var(--gray);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .order-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Footer Navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 90;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        
+        .nav-item span {
+            font-size: 0.7rem;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 600px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-bars menu-btn"></i>
+            <img src="https://i.ibb.co/mFPrvzHC/0a7ca26b-3215-4990-8d5a-b669b374e12f.png" alt="RR Logo" class="logo">
+            <div class="brand-name">RR MOBILE ACCESSORIES</div>
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-name">RR MOBILE ACCESSORIES</div>
+            <i class="fas fa-times close-btn"></i>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="https://i.ibb.co/mFPrvzHC/0a7ca26b-3215-4990-8d5a-b669b374e12f.png" alt="User Avatar" id="userAvatar">
+            </div>
+            <div class="user-info">
+                <h3 id="userName">User Name</h3>
+                <p id="userEmail">user@example.com</p>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-shopping-bag"></i>
+                <span>My Orders</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-heart"></i>
+                <span>Wishlist</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-gift"></i>
+                <span>Offers</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-headset"></i>
+                <span>Help Center</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-info-circle"></i>
+                <span>About Us</span>
+            </div>
+            <div class="menu-item logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="success-title">Order Placed Successfully!</h1>
+            <p class="success-message">Thank you for your purchase. Your order has been confirmed and will be processed shortly.</p>
+            <div class="order-id">Order ID: <span id="orderIdDisplay"></span></div>
+        </div>
+        
+        <div class="order-summary">
+            <h2 class="section-title">Order Summary</h2>
+            
+            <div class="order-product">
+                <div class="product-image">
+                    <img src="" alt="Product Image" id="productImage">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title" id="productTitle">Product Title</h3>
+                    <div class="product-price">₹<span id="productPrice">0</span></div>
+                    <div class="product-quantity">Quantity: <span id="productQuantity">1</span></div>
+                </div>
+            </div>
+            
+            <div class="order-details">
+                <div class="detail-row">
+                    <span class="detail-label">Order Date:</span>
+                    <span class="detail-value" id="orderDate"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method:</span>
+                    <span class="detail-value" id="paymentMethod">Cash on Delivery</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Delivery Address:</span>
+                    <span class="detail-value" id="deliveryAddress">Your Address Here</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Delivery Expected:</span>
+                    <span class="detail-value" id="deliveryDate">Within 3-5 business days</span>
+                </div>
+                
+                <div class="order-total">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value">₹<span id="orderTotal">0</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="index.html" class="btn btn-outline">Continue Shopping</a>
+            <a href="orders.html" class="btn btn-primary">View All Orders</a>
+        </div>
+    </main>
+    
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+        <div class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Orders</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Wishlist</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Account</span>
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBOlLzr0liPHXEssNXSpY8XozoYPPEeA60",
+            authDomain: "rr-mobile-accessories.firebaseapp.com",
+            databaseURL: "https://rr-mobile-accessories-default-rtdb.firebaseio.com",
+            projectId: "rr-mobile-accessories",
+            storageBucket: "rr-mobile-accessories.appspot.com",
+            messagingSenderId: "261034064103",
+            appId: "1:261034064103:web:b59fbb7118dd7f93868a42",
+            measurementId: "G-28RJEQ3X7H"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        
+        // Telegram Bot Info
+        const BOT_TOKEN = '8059039278:AAFC-fy4GUsgil2EwHxEclwzR8H02SEqvak';
+        const CHAT_ID = '6690653192';
+        
+        // DOM Elements
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        const logoutBtn = document.querySelector('.logout-btn');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const userAvatar = document.getElementById('userAvatar');
+        
+        // Order Display Elements
+        const orderIdDisplay = document.getElementById('orderIdDisplay');
+        const productImage = document.getElementById('productImage');
+        const productTitle = document.getElementById('productTitle');
+        const productPrice = document.getElementById('productPrice');
+        const productQuantity = document.getElementById('productQuantity');
+        const orderTotal = document.getElementById('orderTotal');
+        const orderDate = document.getElementById('orderDate');
+        const paymentMethod = document.getElementById('paymentMethod');
+        const deliveryAddress = document.getElementById('deliveryAddress');
+        const deliveryDate = document.getElementById('deliveryDate');
+        
+        // Global variables
+        let currentOrder = null;
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                } else {
+                    // Load user data
+                    loadUserData(user.uid);
+                    
+                    // Get order ID from URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const orderId = urlParams.get('orderId');
+                    
+                    if (orderId) {
+                        // Load order details
+                        loadOrderDetails(orderId, user.uid);
+                    } else {
+                        // Redirect if no order ID
+                        window.location.href = 'orders.html';
+                    }
+                }
+            });
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Load user data from Firebase
+        function loadUserData(userId) {
+            database.ref('users/' + userId).once('value')
+                .then((snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        userName.textContent = userData.name || 'User Name';
+                        userEmail.textContent = userData.email || 'user@example.com';
+                        
+                        // Set delivery address if available
+                        if (userData.address) {
+                            deliveryAddress.textContent = userData.address;
+                        }
+                        
+                        // Set avatar with initials if no image
+                        if (!userData.photoURL) {
+                            const initials = userData.name ? userData.name.charAt(0) : 'U';
+                            userAvatar.textContent = initials;
+                            userAvatar.style.fontSize = '1.5rem';
+                            userAvatar.style.color = '#555';
+                        }
+                    }
+                });
+        }
+        
+        // Load order details from Firebase
+        function loadOrderDetails(orderId, userId) {
+            database.ref('orders/' + orderId).once('value')
+                .then((snapshot) => {
+                    const order = snapshot.val();
+                    
+                    if (!order || order.userId !== userId) {
+                        window.location.href = 'orders.html';
+                        return;
+                    }
+                    
+                    currentOrder = order;
+                    currentOrder.id = orderId;
+                    
+                    // Display order details
+                    orderIdDisplay.textContent = orderId.substring(0, 8);
+                    
+                    // Format date
+                    const orderDateObj = new Date(order.createdAt);
+                    const formattedDate = orderDateObj.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    orderDate.textContent = formattedDate;
+                    
+                    // Calculate delivery date (3-5 days from now)
+                    const deliveryDateObj = new Date(orderDateObj);
+                    deliveryDateObj.setDate(deliveryDateObj.getDate() + 3 + Math.floor(Math.random() * 3));
+                    const formattedDeliveryDate = deliveryDateObj.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    deliveryDate.textContent = `${formattedDeliveryDate} (Estimated)`;
+                    
+                    // Product details
+                    productImage.src = order.productImage || 'https://via.placeholder.com/100';
+                    productTitle.textContent = order.productTitle;
+                    productPrice.textContent = order.price;
+                    productQuantity.textContent = order.quantity;
+                    orderTotal.textContent = order.total;
+                    
+                    // Payment method
+                    if (order.paymentMethod) {
+                        paymentMethod.textContent = order.paymentMethod;
+                    }
+                    
+                    // Send Telegram notification if this is a new order
+                    if (order.status === 'pending') {
+                        sendTelegramNotification(order);
+                    }
+                });
+        }
+        
+        // Send Telegram notification
+        function sendTelegramNotification(order) {
+            const message = `🎉 *New Order Received* 🎉
+            
+Order ID: ${order.id}
+Product: ${order.productTitle}
+Quantity: ${order.quantity}
+Price: ₹${order.price}
+Total: ₹${order.total}
+Payment Method: ${order.paymentMethod || 'Cash on Delivery'}
+Customer Email: ${auth.currentUser.email}
+
+Order placed at: ${new Date(order.createdAt).toLocaleString()}`;
+            
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => console.log('Telegram notification sent:', data))
+                .catch(error => console.error('Error sending Telegram notification:', error));
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Sidebar toggle
+            menuBtn.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', () => {
+                auth.signOut().then(() => {
+                    window.location.href = 'login.html';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
