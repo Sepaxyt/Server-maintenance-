@@ -238,8 +238,8 @@
             text-decoration: none;
         }
         
-        /* Products Styles */
-        .products {
+        /* coverflip Styles */
+        .coverflip {
             padding: 20px;
         }
         
@@ -664,8 +664,8 @@
             </div>
         </div>
         
-        <!-- Mobile Covers Products -->
-        <div class="products">
+        <!-- Mobile Covers coverflip -->
+        <div class="coverflip">
             <div class="section-title">
                 <h2>Mobile Covers</h2>
                 <div class="sort-options">
@@ -794,7 +794,7 @@
         const sortSelect = document.getElementById('sortSelect');
         
         // Global variables
-        let products = [];
+        let coverflip = [];
         let currentProduct = null;
         let cartItems = [];
         
@@ -850,15 +850,15 @@
         
         // Load mobile covers from Firebase
         function loadMobileCovers() {
-            database.ref('products').orderByChild('category').equalTo('covers').once('value')
+            database.ref('coverflip').orderByChild('category').equalTo('covers').once('value')
                 .then((snapshot) => {
-                    products = [];
+                    coverflip = [];
                     productGrid.innerHTML = '';
                     
                     snapshot.forEach((childSnapshot) => {
                         const product = childSnapshot.val();
                         product.id = childSnapshot.key;
-                        products.push(product);
+                        coverflip.push(product);
                         
                         // Create product card
                         createProductCard(product);
@@ -923,7 +923,7 @@
         
         // Show product modal
         function showProductModal(productId) {
-            currentProduct = products.find(p => p.id === productId);
+            currentProduct = coverflip.find(p => p.id === productId);
             if (!currentProduct) return;
             
             document.getElementById('modalProductImage').src = currentProduct.image;
@@ -958,9 +958,9 @@
             document.body.style.overflow = '';
         }
         
-        // Filter products by search
+        // Filter coverflip by search
         function filterProducts(searchTerm) {
-            const filteredProducts = products.filter(product => 
+            const filteredProducts = coverflip.filter(product => 
                 product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 product.description.toLowerCase().includes(searchTerm.toLowerCase())
             );
@@ -969,9 +969,9 @@
             filteredProducts.forEach(product => createProductCard(product));
         }
         
-        // Sort products
+        // Sort coverflip
         function sortProducts(sortBy) {
-            let sortedProducts = [...products];
+            let sortedProducts = [...coverflip];
             
             switch(sortBy) {
                 case 'price-low':

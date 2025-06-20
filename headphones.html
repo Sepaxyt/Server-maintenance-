@@ -64,10 +64,10 @@
         .header-icons {
             display: flex;
             align-items: center;
+            gap: 15px;
         }
         
         .header-icons i {
-            margin-left: 20px;
             font-size: 1.2rem;
             cursor: pointer;
         }
@@ -236,8 +236,8 @@
             color: var(--dark);
         }
         
-        /* Products Styles */
-        .products {
+        /* headphones Styles */
+        .headphones {
             padding: 0 20px 20px;
         }
         
@@ -254,6 +254,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: all 0.3s;
             cursor: pointer;
+            position: relative;
         }
         
         .product-card:hover {
@@ -330,6 +331,60 @@
         .rating-stars {
             color: var(--warning);
             margin-right: 5px;
+        }
+        
+        /* Product Menu Dot */
+        .product-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .product-menu i {
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        
+        .product-menu-options {
+            position: absolute;
+            top: 35px;
+            right: 5px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 20;
+            display: none;
+        }
+        
+        .product-menu-options.show {
+            display: block;
+        }
+        
+        .menu-option {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        
+        .menu-option i {
+            font-size: 0.9rem;
+        }
+        
+        .menu-option:hover {
+            background: #f5f5f5;
         }
         
         /* Footer Navigation */
@@ -523,6 +578,33 @@
             color: var(--primary);
         }
         
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 300;
+            display: none;
+        }
+        
+        .toast.show {
+            display: block;
+            animation: fadeInOut 3s forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; bottom: 50px; }
+            10% { opacity: 1; bottom: 80px; }
+            90% { opacity: 1; bottom: 80px; }
+            100% { opacity: 0; bottom: 50px; }
+        }
+        
         @media (min-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -554,7 +636,7 @@
             <div class="brand-name">RR MOBILE ACCESSORIES</div>
         </div>
         <div class="header-icons">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search" id="headerSearch"></i>
             <div style="position: relative;">
                 <i class="fas fa-shopping-cart" id="cartIcon"></i>
                 <div class="cart-count" id="cartCount">0</div>
@@ -635,6 +717,9 @@
     <!-- Overlay -->
     <div class="overlay"></div>
     
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
     <!-- Main Content -->
     <main>
         <!-- Page Title -->
@@ -650,10 +735,10 @@
             </div>
         </div>
         
-        <!-- Products -->
-        <div class="products">
+        <!-- headphones -->
+        <div class="headphones">
             <div class="product-grid" id="productGrid">
-                <!-- Products will be loaded here from Firebase -->
+                <!-- headphones will be loaded here from Firebase -->
             </div>
         </div>
     </main>
@@ -765,11 +850,14 @@
         const cartCount = document.getElementById('cartCount');
         const cartIcon = document.getElementById('cartIcon');
         const searchInput = document.getElementById('searchInput');
+        const headerSearch = document.getElementById('headerSearch');
+        const toast = document.getElementById('toast');
         
         // Global variables
-        let products = [];
+        let headphones = [];
         let currentProduct = null;
         let cartItems = [];
+        let currentMenuProductId = null;
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
@@ -781,8 +869,8 @@
                     // Load user data
                     loadUserData(user.uid);
                     
-                    // Load products
-                    loadProducts();
+                    // Load headphones
+                    loadheadphones();
                     
                     // Load cart items
                     loadCartItems(user.uid);
@@ -793,7 +881,7 @@
             setupEventListeners();
         });
         
-        // Load user data from Firebase
+        // 1. Load user data from Firebase
         function loadUserData(userId) {
             database.ref('users/' + userId).once('value')
                 .then((snapshot) => {
@@ -813,11 +901,11 @@
                 });
         }
         
-        // Load products from Firebase (filtered by category)
-        function loadProducts(searchTerm = '') {
-            database.ref('products').orderByChild('category').equalTo('headphones').once('value')
+        // 2. Load headphones from Firebase (filtered by category)
+        function loadheadphones(searchTerm = '') {
+            database.ref('headphones').orderByChild('category').equalTo('headphones').once('value')
                 .then((snapshot) => {
-                    products = [];
+                    headphones = [];
                     productGrid.innerHTML = '';
                     
                     snapshot.forEach((childSnapshot) => {
@@ -826,11 +914,11 @@
                         
                         // Apply search filter if search term exists
                         if (searchTerm && 
-                            !product.title.toLowerCase().includes(searchTerm.toLowerCase()) {
+                            !product.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return;
                         }
                         
-                        products.push(product);
+                        headphones.push(product);
                         
                         // Create product card
                         const productCard = document.createElement('div');
@@ -838,6 +926,23 @@
                         productCard.dataset.id = product.id;
                         
                         productCard.innerHTML = `
+                            <div class="product-menu">
+                                <i class="fas fa-ellipsis-v"></i>
+                                <div class="product-menu-options">
+                                    <div class="menu-option" data-action="add-to-wishlist">
+                                        <i class="fas fa-heart"></i>
+                                        <span>Add to Wishlist</span>
+                                    </div>
+                                    <div class="menu-option" data-action="quick-view">
+                                        <i class="fas fa-eye"></i>
+                                        <span>Quick View</span>
+                                    </div>
+                                    <div class="menu-option" data-action="share">
+                                        <i class="fas fa-share"></i>
+                                        <span>Share</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="product-image">
                                 ${product.discount ? `<div class="product-badge">${product.discount}% OFF</div>` : ''}
                                 <img src="${product.image}" alt="${product.title}">
@@ -858,17 +963,38 @@
                             </div>
                         `;
                         
-                        productCard.addEventListener('click', () => showProductModal(product.id));
+                        // Add click event for the whole card
+                        productCard.querySelector('.product-image, .product-details').addEventListener('click', () => {
+                            showProductModal(product.id);
+                        });
+                        
+                        // Add click event for menu dots
+                        const menuBtn = productCard.querySelector('.product-menu');
+                        menuBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            currentMenuProductId = product.id;
+                            toggleProductMenu(menuBtn);
+                        });
+                        
+                        // Add click events for menu options
+                        const menuOptions = productCard.querySelectorAll('.menu-option');
+                        menuOptions.forEach(option => {
+                            option.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                handleMenuOption(option.dataset.action, product.id);
+                            });
+                        });
+                        
                         productGrid.appendChild(productCard);
                     });
                     
-                    if (products.length === 0) {
+                    if (headphones.length === 0) {
                         productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No headphones found</p>';
                     }
                 });
         }
         
-        // Load cart items from Firebase
+        // 3. Load cart items from Firebase
         function loadCartItems(userId) {
             database.ref('carts/' + userId + '/items').on('value', (snapshot) => {
                 cartItems = [];
@@ -886,7 +1012,107 @@
             });
         }
         
-        // Get rating stars HTML
+        // 4. Toggle product menu (3-dot menu)
+        function toggleProductMenu(menuBtn) {
+            // Close all other menus first
+            document.querySelectorAll('.product-menu-options').forEach(menu => {
+                if (menu !== menuBtn.nextElementSibling) {
+                    menu.classList.remove('show');
+                }
+            });
+            
+            // Toggle current menu
+            const menu = menuBtn.nextElementSibling;
+            menu.classList.toggle('show');
+            
+            // Close menu when clicking outside
+            const clickHandler = (e) => {
+                if (!menu.contains(e.target) {
+                    menu.classList.remove('show');
+                    document.removeEventListener('click', clickHandler);
+                }
+            };
+            
+            document.addEventListener('click', clickHandler);
+        }
+        
+        // 5. Handle menu option selection
+        function handleMenuOption(action, productId) {
+            const product = headphones.find(p => p.id === productId);
+            if (!product) return;
+            
+            switch(action) {
+                case 'add-to-wishlist':
+                    addToWishlist(product);
+                    break;
+                case 'quick-view':
+                    showProductModal(productId);
+                    break;
+                case 'share':
+                    shareProduct(product);
+                    break;
+            }
+        }
+        
+        // 6. Add to wishlist function
+        function addToWishlist(product) {
+            const userId = auth.currentUser?.uid;
+            if (!userId) return;
+            
+            database.ref('wishlist/' + userId + '/' + product.id).set({
+                productId: product.id,
+                title: product.title,
+                image: product.image,
+                price: product.price,
+                addedAt: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                showToast('Added to wishlist');
+            }).catch(error => {
+                console.error('Error adding to wishlist:', error);
+                showToast('Failed to add to wishlist', 'error');
+            });
+        }
+        
+        // 7. Share product function
+        function shareProduct(product) {
+            if (navigator.share) {
+                navigator.share({
+                    title: product.title,
+                    text: `Check out this ${product.title} at just ₹${product.price}`,
+                    url: window.location.href
+                }).catch(error => {
+                    console.log('Error sharing:', error);
+                    copyToClipboard(`${product.title} - ₹${product.price}\n${window.location.href}`);
+                    showToast('Link copied to clipboard');
+                });
+            } else {
+                copyToClipboard(`${product.title} - ₹${product.price}\n${window.location.href}`);
+                showToast('Link copied to clipboard');
+            }
+        }
+        
+        // 8. Copy to clipboard helper
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        
+        // 9. Show toast notification
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.style.backgroundColor = type === 'error' ? var(--danger) : var(--dark);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 10. Get rating stars HTML
         function getRatingStars(rating) {
             if (!rating) return '<i class="far fa-star"></i>'.repeat(5);
             
@@ -912,7 +1138,7 @@
         
         // Show product modal
         function showProductModal(productId) {
-            currentProduct = products.find(p => p.id === productId);
+            currentProduct = headphones.find(p => p.id === productId);
             if (!currentProduct) return;
             
             document.getElementById('modalProductImage').src = currentProduct.image;
@@ -1009,11 +1235,11 @@
                     quantity: quantity,
                     addedAt: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
-                    alert('Product added to cart!');
+                    showToast('Added to cart');
                     closeProductModal();
                 }).catch(error => {
                     console.error('Error adding to cart:', error);
-                    alert('Failed to add product to cart');
+                    showToast('Failed to add to cart', 'error');
                 });
             });
             
@@ -1051,7 +1277,7 @@
                     window.location.href = `order-success.html?orderId=${orderRef.key}`;
                 }).catch(error => {
                     console.error('Error creating order:', error);
-                    alert('Failed to place order');
+                    showToast('Failed to place order', 'error');
                 });
             });
             
@@ -1062,7 +1288,12 @@
             
             // Search functionality
             searchInput.addEventListener('input', (e) => {
-                loadProducts(e.target.value);
+                loadheadphones(e.target.value);
+            });
+            
+            // Header search click
+            headerSearch.addEventListener('click', () => {
+                searchInput.focus();
             });
             
             // Sidebar menu items
@@ -1087,6 +1318,10 @@
                         window.location.href = 'orders.html';
                     } else if (text === 'wishlist') {
                         window.location.href = 'wishlist.html';
+                    } else if (text === 'logout') {
+                        auth.signOut().then(() => {
+                            window.location.href = 'login.html';
+                        });
                     }
                 });
             });
@@ -1101,7 +1336,7 @@
                     } else if (text === 'headphones') {
                         window.location.href = 'headphones.html';
                     } else if (text === 'search') {
-                        window.location.href = 'search.html';
+                        searchInput.focus();
                     } else if (text === 'orders') {
                         window.location.href = 'orders.html';
                     } else if (text === 'account') {
