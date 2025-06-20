@@ -28,6 +28,7 @@
         body {
             background-color: #f5f5f5;
             color: #333;
+            padding-bottom: 60px;
         }
         
         /* Header Styles */
@@ -77,106 +78,6 @@
             cursor: pointer;
         }
         
-        /* Sidebar Styles */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100vh;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 200;
-            transition: all 0.3s ease;
-            overflow-y: auto;
-        }
-        
-        .sidebar.open {
-            left: 0;
-        }
-        
-        .sidebar-header {
-            padding: 20px;
-            background: linear-gradient(135deg, #0f2027, #203a43);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .close-btn {
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        .user-profile {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #555;
-            overflow: hidden;
-        }
-        
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .user-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .user-info p {
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .sidebar-menu {
-            padding: 15px 0;
-        }
-        
-        .menu-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .menu-item:hover {
-            background: #f0f0f0;
-        }
-        
-        .menu-item i {
-            margin-right: 15px;
-            color: #555;
-            font-size: 1.1rem;
-        }
-        
-        .menu-item.active {
-            background: rgba(67, 97, 238, 0.1);
-            border-left: 3px solid var(--primary);
-        }
-        
-        .logout-btn {
-            color: var(--danger);
-        }
-        
         /* Search Bar Styles */
         .search-container {
             padding: 15px 20px;
@@ -209,11 +110,9 @@
             font-size: 1rem;
         }
         
-        /* Categories Styles */
-        .categories {
+        /* headphones Styles */
+        .headphones {
             padding: 20px;
-            background: white;
-            margin-bottom: 15px;
         }
         
         .section-title {
@@ -228,41 +127,6 @@
             font-size: 0.9rem;
             color: var(--primary);
             cursor: pointer;
-        }
-        
-        .category-list {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 10px;
-        }
-        
-        .category-item {
-            min-width: 100px;
-            text-align: center;
-            cursor: pointer;
-        }
-        
-        .category-icon {
-            width: 60px;
-            height: 60px;
-            background: #f0f0f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px;
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .category-name {
-            font-size: 0.9rem;
-        }
-        
-        /* headphones Styles */
-        .headphones {
-            padding: 0 20px 20px;
         }
         
         .product-grid {
@@ -645,109 +509,46 @@
         </div>
     </header>
     
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="brand-name">RR MOBILE ACCESSORIES</div>
-            <i class="fas fa-times close-btn"></i>
-        </div>
-        
-        <div class="user-profile">
-            <div class="user-avatar">
-                <img src="https://i.ibb.co/mFPrvzHC/0a7ca26b-3215-4990-8d5a-b669b374e12f.png" alt="User Avatar" id="userAvatar">
-            </div>
-            <div class="user-info">
-                <h3 id="userName">User Name</h3>
-                <p id="userEmail">user@example.com</p>
-            </div>
-        </div>
-        
-        <div class="sidebar-menu">
-            <div class="menu-item">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </div>
-            <div class="menu-item active">
-                <i class="fas fa-headphones"></i>
-                <span>Headphones</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-mobile-alt"></i>
-                <span>Mobile Covers</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-bolt"></i>
-                <span>Chargers</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-battery-full"></i>
-                <span>Power Banks</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-volume-up"></i>
-                <span>Speakers</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-shopping-bag"></i>
-                <span>My Orders</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-heart"></i>
-                <span>Wishlist</span>
-            </div>
-            <div class="menu-item logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </div>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search headphones..." id="searchInput">
+            <button><i class="fas fa-search"></i></button>
         </div>
     </div>
     
-    <!-- Overlay -->
-    <div class="overlay"></div>
+    <!-- Premium Headphones -->
+    <div class="headphones">
+        <div class="section-title">
+            <h2>Premium Headphones</h2>
+            <span class="see-all">See All</span>
+        </div>
+        <div class="product-grid" id="premiumGrid">
+            <!-- Premium headphones will be loaded here -->
+        </div>
+    </div>
     
-    <!-- Main Content -->
-    <main>
-        <!-- Search Bar -->
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" placeholder="Search headphones..." id="searchInput">
-                <button><i class="fas fa-search"></i></button>
-            </div>
+    <!-- Wireless Headphones -->
+    <div class="headphones">
+        <div class="section-title">
+            <h2>Wireless Headphones</h2>
+            <span class="see-all">See All</span>
         </div>
-        
-        <!-- Headphones headphones -->
-        <div class="headphones">
-            <div class="section-title">
-                <h2>Premium Headphones</h2>
-                <span class="see-all">See All</span>
-            </div>
-            <div class="product-grid" id="productGrid">
-                <!-- Headphones will be loaded here from Firebase -->
-            </div>
+        <div class="product-grid" id="wirelessGrid">
+            <!-- Wireless headphones will be loaded here -->
         </div>
-        
-        <!-- Wireless Headphones -->
-        <div class="headphones">
-            <div class="section-title">
-                <h2>Wireless Headphones</h2>
-                <span class="see-all">See All</span>
-            </div>
-            <div class="product-grid" id="wirelessGrid">
-                <!-- Wireless headphones will be loaded here -->
-            </div>
+    </div>
+    
+    <!-- Wired Headphones -->
+    <div class="headphones">
+        <div class="section-title">
+            <h2>Wired Headphones</h2>
+            <span class="see-all">See All</span>
         </div>
-        
-        <!-- Wired Headphones -->
-        <div class="headphones">
-            <div class="section-title">
-                <h2>Wired Headphones</h2>
-                <span class="see-all">See All</span>
-            </div>
-            <div class="product-grid" id="wiredGrid">
-                <!-- Wired headphones will be loaded here -->
-            </div>
+        <div class="product-grid" id="wiredGrid">
+            <!-- Wired headphones will be loaded here -->
         </div>
-    </main>
+    </div>
     
     <!-- Footer Navigation -->
     <div class="footer-nav">
@@ -854,40 +655,144 @@
         </form>
     </div>
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Overlay -->
+    <div class="overlay"></div>
     
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBOlLzr0liPHXEssNXSpY8XozoYPPEeA60",
-            authDomain: "rr-mobile-accessories.firebaseapp.com",
-            databaseURL: "https://rr-mobile-accessories-default-rtdb.firebaseio.com",
-            projectId: "rr-mobile-accessories",
-            storageBucket: "rr-mobile-accessories.appspot.com",
-            messagingSenderId: "261034064103",
-            appId: "1:261034064103:web:b59fbb7118dd7f93868a42",
-            measurementId: "G-28RJEQ3X7H"
-        };
+        // Sample data for 10 headphones (you'll replace this with Firebase data)
+        const headphonesData = [
+            {
+                id: "hp001",
+                title: "Boat Rockerz 450 Bluetooth Headphones",
+                description: "Premium wireless headphones with 40mm drivers, up to 15 hours playback, and lightweight design.",
+                price: 1499,
+                originalPrice: 1999,
+                discount: 25,
+                image: "https://m.media-amazon.com/images/I/51xxA+6E+xL._SL1500_.jpg",
+                type: "wireless",
+                rating: 4.5,
+                ratingCount: 1245,
+                premium: true
+            },
+            {
+                id: "hp002",
+                title: "JBL C100SI Wired Earphones",
+                description: "High-quality wired earphones with 9mm drivers, in-line remote with mic, and tangle-free cable.",
+                price: 699,
+                originalPrice: 999,
+                discount: 30,
+                image: "https://m.media-amazon.com/images/I/61xPVw2wZEL._SL1500_.jpg",
+                type: "wired",
+                rating: 4.2,
+                ratingCount: 876,
+                premium: true
+            },
+            {
+                id: "hp003",
+                title: "Sony WH-CH510 Wireless Headphones",
+                description: "Bluetooth wireless headphones with 30mm drivers, 35hrs battery life, and quick charge feature.",
+                price: 2999,
+                originalPrice: 3499,
+                discount: 14,
+                image: "https://m.media-amazon.com/images/I/61Ojr4dE1VL._SL1500_.jpg",
+                type: "wireless",
+                rating: 4.7,
+                ratingCount: 532,
+                premium: true
+            },
+            {
+                id: "hp004",
+                title: "OnePlus Bullets Z2 Wireless Earphones",
+                description: "Bluetooth neckband earphones with 12.4mm drivers, 30hrs playback, and IP55 water resistance.",
+                price: 1999,
+                image: "https://m.media-amazon.com/images/I/61mI6wQYfUL._SL1500_.jpg",
+                type: "wireless",
+                rating: 4.4,
+                ratingCount: 765,
+                premium: false
+            },
+            {
+                id: "hp005",
+                title: "Sennheiser HD 206 Wired Headphones",
+                description: "Professional wired headphones with dynamic stereo sound, lightweight design, and 3m cable.",
+                price: 1499,
+                image: "https://m.media-amazon.com/images/I/61FJt6JbRVL._SL1500_.jpg",
+                type: "wired",
+                rating: 4.3,
+                ratingCount: 342,
+                premium: false
+            },
+            {
+                id: "hp006",
+                title: "Noise ColorFit Pulse 2 Bluetooth Headphones",
+                description: "Wireless headphones with 40mm drivers, 50hrs playback, and dual connectivity.",
+                price: 1799,
+                originalPrice: 2499,
+                discount: 28,
+                image: "https://m.media-amazon.com/images/I/61XDeaOrAIL._SL1500_.jpg",
+                type: "wireless",
+                rating: 4.1,
+                ratingCount: 987,
+                premium: true
+            },
+            {
+                id: "hp007",
+                title: "pTron Bassbuds Pro Wireless Earphones",
+                description: "True wireless earbuds with deep bass, 24hrs playback, and touch controls.",
+                price: 999,
+                originalPrice: 1499,
+                discount: 33,
+                image: "https://m.media-amazon.com/images/I/51Qd-+a3VmL._SL1500_.jpg",
+                type: "wireless",
+                rating: 3.9,
+                ratingCount: 654,
+                premium: false
+            },
+            {
+                id: "hp008",
+                title: "Boult Audio ProBass Wired Headphones",
+                description: "Bass boosted wired headphones with 40mm drivers and in-line mic.",
+                price: 599,
+                image: "https://m.media-amazon.com/images/I/61XDeaOrAIL._SL1500_.jpg",
+                type: "wired",
+                rating: 4.0,
+                ratingCount: 432,
+                premium: false
+            },
+            {
+                id: "hp009",
+                title: "JBL Tune 510BT Wireless Headphones",
+                description: "Pure bass sound with wireless Bluetooth 5.0 and 40hrs battery life.",
+                price: 3499,
+                originalPrice: 3999,
+                discount: 12,
+                image: "https://m.media-amazon.com/images/I/61FHsd2Ae5L._SL1500_.jpg",
+                type: "wireless",
+                rating: 4.6,
+                ratingCount: 876,
+                premium: true
+            },
+            {
+                id: "hp010",
+                title: "Sony MDR-ZX110 Wired Headphones",
+                description: "Lightweight on-ear headphones with 30mm drivers for crisp sound.",
+                price: 999,
+                image: "https://m.media-amazon.com/images/I/61FHsd2Ae5L._SL1500_.jpg",
+                type: "wired",
+                rating: 4.2,
+                ratingCount: 543,
+                premium: false
+            }
+        ];
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-        
         // Telegram Bot Info
         const BOT_TOKEN = '8059039278:AAFC-fy4GUsgil2EwHxEclwzR8H02SEqvak';
         const CHAT_ID = '6690653192';
         
         // DOM Elements
         const menuBtn = document.querySelector('.menu-btn');
-        const closeBtn = document.querySelector('.close-btn');
-        const sidebar = document.querySelector('.sidebar');
         const overlay = document.querySelector('.overlay');
-        const logoutBtn = document.querySelector('.logout-btn');
-        const productGrid = document.getElementById('productGrid');
+        const premiumGrid = document.getElementById('premiumGrid');
         const wirelessGrid = document.getElementById('wirelessGrid');
         const wiredGrid = document.getElementById('wiredGrid');
         const searchInput = document.getElementById('searchInput');
@@ -898,84 +803,39 @@
         const addToCartBtn = document.getElementById('addToCartBtn');
         const buyNowBtn = document.getElementById('buyNowBtn');
         const addressForm = document.getElementById('addressForm');
-        const userName = document.getElementById('userName');
-        const userEmail = document.getElementById('userEmail');
-        const userAvatar = document.getElementById('userAvatar');
         
         // Global variables
-        let headphones = [];
         let currentProduct = null;
         let currentOrder = null;
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
-            // Check authentication
-            auth.onAuthStateChanged((user) => {
-                if (!user) {
-                    window.location.href = 'login.html';
-                } else {
-                    // Load user data
-                    loadUserData(user.uid);
-                    
-                    // Load headphones headphones
-                    loadHeadphones();
-                    
-                    // Setup search functionality
-                    setupSearch();
-                }
-            });
+            // Load headphones
+            loadHeadphones();
             
             // Setup event listeners
             setupEventListeners();
         });
         
-        // Load user data from Firebase
-        function loadUserData(userId) {
-            database.ref('users/' + userId).once('value')
-                .then((snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        userName.textContent = userData.name || 'User Name';
-                        userEmail.textContent = userData.email || 'user@example.com';
-                        
-                        // Set avatar with initials if no image
-                        if (!userData.photoURL) {
-                            const initials = userData.name ? userData.name.charAt(0) : 'U';
-                            userAvatar.textContent = initials;
-                            userAvatar.style.fontSize = '1.5rem';
-                            userAvatar.style.color = '#555';
-                        }
-                    }
-                });
-        }
-        
-        // Load headphones from Firebase
+        // Load headphones
         function loadHeadphones() {
-            database.ref('headphones').orderByChild('category').equalTo('headphones').once('value')
-                .then((snapshot) => {
-                    headphones = [];
-                    productGrid.innerHTML = '';
-                    wirelessGrid.innerHTML = '';
-                    wiredGrid.innerHTML = '';
-                    
-                    snapshot.forEach((childSnapshot) => {
-                        const product = childSnapshot.val();
-                        product.id = childSnapshot.key;
-                        headphones.push(product);
-                        
-                        // Create product card
-                        const productCard = createProductCard(product);
-                        
-                        // Add to appropriate grid based on type
-                        if (product.type === 'wireless') {
-                            wirelessGrid.appendChild(productCard);
-                        } else if (product.type === 'wired') {
-                            wiredGrid.appendChild(productCard);
-                        } else {
-                            productGrid.appendChild(productCard);
-                        }
-                    });
-                });
+            premiumGrid.innerHTML = '';
+            wirelessGrid.innerHTML = '';
+            wiredGrid.innerHTML = '';
+            
+            headphonesData.forEach(product => {
+                const productCard = createProductCard(product);
+                
+                // Add to appropriate grid
+                if (product.premium) {
+                    premiumGrid.appendChild(productCard);
+                }
+                if (product.type === 'wireless') {
+                    wirelessGrid.appendChild(productCard);
+                } else {
+                    wiredGrid.appendChild(productCard);
+                }
+            });
         }
         
         // Create product card element
@@ -1000,7 +860,7 @@
                         <div class="rating-stars">
                             ${getRatingStars(product.rating)}
                         </div>
-                        <span>(${product.ratingCount || 0})</span>
+                        <span>(${product.ratingCount})</span>
                     </div>
                 </div>
             `;
@@ -1040,18 +900,24 @@
                 
                 if (searchTerm.length > 0) {
                     // Filter headphones
-                    const filteredProducts = headphones.filter(product => 
+                    const filteredProducts = headphonesData.filter(product => 
                         product.title.toLowerCase().includes(searchTerm) || 
-                        product.description.toLowerCase().includes(searchTerm)
+                        product.description.toLowerCase().includes(searchTerm))
                     
                     // Clear grids
-                    productGrid.innerHTML = '';
+                    premiumGrid.innerHTML = '';
                     wirelessGrid.innerHTML = '';
                     wiredGrid.innerHTML = '';
                     
-                    // Add filtered headphones to main grid
+                    // Add filtered headphones to all grids
                     filteredProducts.forEach(product => {
-                        productGrid.appendChild(createProductCard(product));
+                        const productCard = createProductCard(product);
+                        premiumGrid.appendChild(productCard);
+                        if (product.type === 'wireless') {
+                            wirelessGrid.appendChild(productCard.cloneNode(true));
+                        } else {
+                            wiredGrid.appendChild(productCard.cloneNode(true));
+                        }
                     });
                 } else {
                     // Reset view if search is empty
@@ -1062,7 +928,7 @@
         
         // Show product modal
         function showProductModal(productId) {
-            currentProduct = headphones.find(p => p.id === productId);
+            currentProduct = headphonesData.find(p => p.id === productId);
             if (!currentProduct) return;
             
             document.getElementById('modalProductImage').src = currentProduct.image;
@@ -1077,8 +943,8 @@
                 document.getElementById('modalProductDiscount').textContent = '';
             }
             
-            document.getElementById('modalProductRatingCount').textContent = currentProduct.ratingCount || 0;
-            document.getElementById('modalProductDescription').textContent = currentProduct.description || 'No description available';
+            document.getElementById('modalProductRatingCount').textContent = currentProduct.ratingCount;
+            document.getElementById('modalProductDescription').textContent = currentProduct.description;
             
             // Update rating stars
             const ratingStars = document.querySelector('.modal-product-rating .rating-stars');
@@ -1116,30 +982,16 @@
         
         // Setup event listeners
         function setupEventListeners() {
-            // Sidebar toggle
+            // Menu button
             menuBtn.addEventListener('click', () => {
-                sidebar.classList.add('open');
                 overlay.classList.add('active');
             });
             
-            closeBtn.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
-            
             overlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
                 productModal.classList.remove('active');
                 addressModal.classList.remove('active');
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
-            });
-            
-            // Logout
-            logoutBtn.addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    window.location.href = 'login.html';
-                });
             });
             
             // Product modal
@@ -1164,17 +1016,8 @@
                 if (!currentProduct) return;
                 
                 const quantity = parseInt(document.querySelector('.quantity-input').value);
-                const userId = auth.currentUser.uid;
-                
-                // Add to cart in Firebase
-                database.ref('carts/' + userId + '/items/' + currentProduct.id).set({
-                    productId: currentProduct.id,
-                    quantity: quantity,
-                    addedAt: firebase.database.ServerValue.TIMESTAMP
-                }).then(() => {
-                    alert('Product added to cart!');
-                    closeProductModal();
-                });
+                alert(`${quantity} ${currentProduct.title} added to cart!`);
+                closeProductModal();
             });
             
             // Buy now
@@ -1203,8 +1046,6 @@
                 
                 if (!currentOrder) return;
                 
-                const userId = auth.currentUser.uid;
-                const userEmail = auth.currentUser.email;
                 const address = {
                     fullName: document.getElementById('fullName').value,
                     phoneNumber: document.getElementById('phoneNumber').value,
@@ -1215,36 +1056,30 @@
                     landmark: document.getElementById('landmark').value
                 };
                 
-                // Create order in Firebase
-                const orderRef = database.ref('orders').push();
-                orderRef.set({
-                    userId: userId,
-                    userEmail: userEmail,
-                    productId: currentOrder.productId,
-                    productTitle: currentOrder.productTitle,
-                    quantity: currentOrder.quantity,
-                    price: currentOrder.price,
-                    total: currentOrder.total,
-                    status: 'pending',
-                    address: address,
-                    createdAt: firebase.database.ServerValue.TIMESTAMP,
-                    paymentMethod: 'Cash on Delivery' // Default
-                }).then(() => {
-                    // Send notification to Telegram
-                    sendTelegramNotification(orderRef.key, currentOrder, address, userEmail);
-                    
-                    // Redirect to order success page
-                    window.location.href = `order-success.html?orderId=${orderRef.key}`;
+                // Send notification to Telegram
+                sendTelegramNotification(currentOrder, address);
+                
+                // Show success message
+                alert(`Order placed successfully! Your order ID is ORD${Math.floor(Math.random() * 1000000)}`);
+                
+                // Close modals
+                closeAddressModalFunc();
+            });
+            
+            // See all buttons
+            document.querySelectorAll('.see-all').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // In a real app, this would navigate to a full headphones page
+                    alert('This would show all headphones in this category');
                 });
             });
         }
         
         // Send Telegram notification with address details
-        function sendTelegramNotification(orderId, order, address, userEmail) {
+        function sendTelegramNotification(order, address) {
             const message = `🎧 *New Headphones Order Received* 🎧
             
 📦 *Order Details:*
-Order ID: ${orderId}
 Product: ${order.productTitle}
 Quantity: ${order.quantity}
 Price: ₹${order.price}
@@ -1253,7 +1088,6 @@ Total: ₹${order.total}
 👤 *Customer Details:*
 Name: ${address.fullName}
 Phone: ${address.phoneNumber}
-Email: ${userEmail}
 
 🏠 *Delivery Address:*
 ${address.address}
