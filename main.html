@@ -28,6 +28,7 @@
         body {
             background-color: #f5f5f5;
             color: #333;
+            padding-bottom: 60px;
         }
         
         /* Header Styles */
@@ -235,6 +236,22 @@
             overflow-x: auto;
             gap: 15px;
             padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f0f0f0;
+        }
+        
+        .category-list::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .category-list::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        
+        .category-list::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 10px;
         }
         
         .category-item {
@@ -547,6 +564,28 @@
             color: var(--primary);
         }
         
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        /* Cart Button Container */
+        .cart-btn-container {
+            position: relative;
+        }
+        
         @media (min-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -578,9 +617,12 @@
             <div class="brand-name">RR MOBILE ACCESSORIES</div>
         </div>
         <div class="header-icons">
-            <i class="fas fa-search"></i>
-            <i class="fas fa-shopping-cart"></i>
-            <i class="fas fa-user"></i>
+            <i class="fas fa-search" id="searchIcon"></i>
+            <div class="cart-btn-container">
+                <i class="fas fa-shopping-cart" id="cartIcon"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+            <i class="fas fa-user" id="userIcon"></i>
         </div>
     </header>
     
@@ -602,35 +644,35 @@
         </div>
         
         <div class="sidebar-menu">
-            <div class="menu-item active">
+            <div class="menu-item active" id="sidebarHome">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="sidebarProfile">
                 <i class="fas fa-user"></i>
                 <span>My Profile</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="sidebarOrders">
                 <i class="fas fa-shopping-bag"></i>
                 <span>My Orders</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="sidebarWishlist">
                 <i class="fas fa-heart"></i>
                 <span>Wishlist</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="sidebarOffers">
                 <i class="fas fa-gift"></i>
                 <span>Offers</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="sidebarHelp">
                 <i class="fas fa-headset"></i>
                 <span>Help Center</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="sidebarAbout">
                 <i class="fas fa-info-circle"></i>
                 <span>About Us</span>
             </div>
-            <div class="menu-item logout-btn">
+            <div class="menu-item logout-btn" id="sidebarLogout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </div>
@@ -643,10 +685,10 @@
     <!-- Main Content -->
     <main>
         <!-- Search Bar -->
-        <div class="search-container">
+        <div class="search-container" id="searchContainer">
             <div class="search-bar">
-                <input type="text" placeholder="Search for products...">
-                <button><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search for products..." id="searchInput">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
             </div>
         </div>
         
@@ -654,7 +696,7 @@
         <div class="categories">
             <div class="section-title">
                 <h2>Categories</h2>
-                <span class="see-all">See All</span>
+                <span class="see-all" id="seeAllCategories">See All</span>
             </div>
             <div class="category-list">
                 <div class="category-item" data-category="headphones">
@@ -694,7 +736,7 @@
         <div class="products">
             <div class="section-title">
                 <h2>Featured Products</h2>
-                <span class="see-all">See All</span>
+                <span class="see-all" id="seeAllFeatured">See All</span>
             </div>
             <div class="product-grid" id="productGrid">
                 <!-- Products will be loaded here from Firebase -->
@@ -705,33 +747,33 @@
         <div class="products">
             <div class="section-title">
                 <h2>Deals of the Day</h2>
-                <span class="see-all">See All</span>
+                <span class="see-all" id="seeAllDeals">See All</span>
             </div>
-            <div class="product-grid">
-                <!-- Products will be loaded here from Firebase -->
+            <div class="product-grid" id="dealsGrid">
+                <!-- Deals will be loaded here from Firebase -->
             </div>
         </div>
     </main>
     
     <!-- Footer Navigation -->
     <div class="footer-nav">
-        <div class="nav-item active">
+        <div class="nav-item active" id="footerHome">
             <i class="fas fa-home"></i>
             <span>Home</span>
         </div>
-        <div class="nav-item">
+        <div class="nav-item" id="footerSearch">
             <i class="fas fa-search"></i>
             <span>Search</span>
         </div>
-        <div class="nav-item">
+        <div class="nav-item" id="footerOrders">
             <i class="fas fa-shopping-bag"></i>
             <span>Orders</span>
         </div>
-        <div class="nav-item">
+        <div class="nav-item" id="footerWishlist">
             <i class="fas fa-heart"></i>
             <span>Wishlist</span>
         </div>
-        <div class="nav-item">
+        <div class="nav-item" id="footerAccount">
             <i class="fas fa-user"></i>
             <span>Account</span>
         </div>
@@ -782,7 +824,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     
     <script>
-        // Your Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBOlLzr0liPHXEssNXSpY8XozoYPPEeA60",
             authDomain: "rr-mobile-accessories.firebaseapp.com",
@@ -808,8 +850,8 @@
         const closeBtn = document.querySelector('.close-btn');
         const sidebar = document.querySelector('.sidebar');
         const overlay = document.querySelector('.overlay');
-        const logoutBtn = document.querySelector('.logout-btn');
         const productGrid = document.getElementById('productGrid');
+        const dealsGrid = document.getElementById('dealsGrid');
         const productModal = document.querySelector('.product-modal');
         const closeModal = document.querySelector('.close-modal');
         const addToCartBtn = document.getElementById('addToCartBtn');
@@ -817,10 +859,38 @@
         const userName = document.getElementById('userName');
         const userEmail = document.getElementById('userEmail');
         const userAvatar = document.getElementById('userAvatar');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchIcon = document.getElementById('searchIcon');
+        const searchContainer = document.getElementById('searchContainer');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartBadge = document.getElementById('cartBadge');
+        const userIcon = document.getElementById('userIcon');
         
-        // Sample product data (will be replaced with Firebase data)
+        // Navigation elements
+        const sidebarHome = document.getElementById('sidebarHome');
+        const sidebarProfile = document.getElementById('sidebarProfile');
+        const sidebarOrders = document.getElementById('sidebarOrders');
+        const sidebarWishlist = document.getElementById('sidebarWishlist');
+        const sidebarOffers = document.getElementById('sidebarOffers');
+        const sidebarHelp = document.getElementById('sidebarHelp');
+        const sidebarAbout = document.getElementById('sidebarAbout');
+        const sidebarLogout = document.getElementById('sidebarLogout');
+        
+        const footerHome = document.getElementById('footerHome');
+        const footerSearch = document.getElementById('footerSearch');
+        const footerOrders = document.getElementById('footerOrders');
+        const footerWishlist = document.getElementById('footerWishlist');
+        const footerAccount = document.getElementById('footerAccount');
+        
+        const seeAllCategories = document.getElementById('seeAllCategories');
+        const seeAllFeatured = document.getElementById('seeAllFeatured');
+        const seeAllDeals = document.getElementById('seeAllDeals');
+        
+        // Global variables
         let products = [];
         let currentProduct = null;
+        let cartItems = [];
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
@@ -834,6 +904,9 @@
                     
                     // Load products
                     loadProducts();
+                    
+                    // Load cart items
+                    loadCartItems(user.uid);
                 }
             });
             
@@ -867,6 +940,7 @@
                 .then((snapshot) => {
                     products = [];
                     productGrid.innerHTML = '';
+                    dealsGrid.innerHTML = '';
                     
                     snapshot.forEach((childSnapshot) => {
                         const product = childSnapshot.val();
@@ -874,35 +948,68 @@
                         products.push(product);
                         
                         // Create product card
-                        const productCard = document.createElement('div');
-                        productCard.className = 'product-card';
-                        productCard.dataset.id = product.id;
+                        const productCard = createProductCard(product);
                         
-                        productCard.innerHTML = `
-                            <div class="product-image">
-                                ${product.discount ? `<div class="product-badge">${product.discount}% OFF</div>` : ''}
-                                <img src="${product.image}" alt="${product.title}">
-                            </div>
-                            <div class="product-details">
-                                <h3 class="product-title">${product.title}</h3>
-                                <div class="product-price">
-                                    ${product.originalPrice ? `<span class="product-original-price">₹${product.originalPrice}</span>` : ''}
-                                    ₹${product.price}
-                                    ${product.discount ? `<span class="product-discount">${product.discount}% off</span>` : ''}
-                                </div>
-                                <div class="product-rating">
-                                    <div class="rating-stars">
-                                        ${getRatingStars(product.rating)}
-                                    </div>
-                                    <span>(${product.ratingCount || 0})</span>
-                                </div>
-                            </div>
-                        `;
-                        
-                        productCard.addEventListener('click', () => showProductModal(product.id));
-                        productGrid.appendChild(productCard);
+                        // Add to appropriate grid
+                        if (product.featured) {
+                            productGrid.appendChild(productCard);
+                        }
+                        if (product.deal) {
+                            dealsGrid.appendChild(productCard.cloneNode(true));
+                        }
                     });
                 });
+        }
+        
+        // Load cart items from Firebase
+        function loadCartItems(userId) {
+            database.ref('carts/' + userId + '/items').on('value', (snapshot) => {
+                cartItems = [];
+                let totalItems = 0;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const item = childSnapshot.val();
+                    item.id = childSnapshot.key;
+                    cartItems.push(item);
+                    totalItems += item.quantity || 0;
+                });
+                
+                // Update cart badge
+                cartBadge.textContent = totalItems;
+                cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
+            });
+        }
+        
+        // Create product card element
+        function createProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.dataset.id = product.id;
+            
+            productCard.innerHTML = `
+                <div class="product-image">
+                    ${product.discount ? `<div class="product-badge">${product.discount}% OFF</div>` : ''}
+                    ${product.deal ? `<div class="product-badge" style="left: auto; right: 10px; background: var(--warning);">DEAL</div>` : ''}
+                    <img src="${product.image}" alt="${product.title}">
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">${product.title}</h3>
+                    <div class="product-price">
+                        ${product.originalPrice ? `<span class="product-original-price">₹${product.originalPrice}</span>` : ''}
+                        ₹${product.price}
+                        ${product.discount ? `<span class="product-discount">${product.discount}% off</span>` : ''}
+                    </div>
+                    <div class="product-rating">
+                        <div class="rating-stars">
+                            ${getRatingStars(product.rating)}
+                        </div>
+                        <span>(${product.ratingCount || 0})</span>
+                    </div>
+                </div>
+            `;
+            
+            productCard.addEventListener('click', () => showProductModal(product.id));
+            return productCard;
         }
         
         // Get rating stars HTML
@@ -986,10 +1093,113 @@
                 document.body.style.overflow = '';
             });
             
-            // Logout
-            logoutBtn.addEventListener('click', () => {
+            // Search functionality
+            searchIcon.addEventListener('click', () => {
+                searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+                if (searchContainer.style.display === 'block') {
+                    searchInput.focus();
+                }
+            });
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm.trim() === '') return;
+                
+                window.location.href = `search.html?query=${encodeURIComponent(searchTerm)}`;
+            }
+            
+            // Cart icon click
+            cartIcon.addEventListener('click', () => {
+                window.location.href = 'cart.html';
+            });
+            
+            // User icon click
+            userIcon.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            });
+            
+            // Navigation items
+            sidebarHome.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+            
+            sidebarProfile.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            
+            sidebarOrders.addEventListener('click', () => {
+                window.location.href = 'orders.html';
+            });
+            
+            sidebarWishlist.addEventListener('click', () => {
+                window.location.href = 'wishlist.html';
+            });
+            
+            sidebarOffers.addEventListener('click', () => {
+                window.location.href = 'offers.html';
+            });
+            
+            sidebarHelp.addEventListener('click', () => {
+                window.location.href = 'help.html';
+            });
+            
+            sidebarAbout.addEventListener('click', () => {
+                window.location.href = 'about.html';
+            });
+            
+            sidebarLogout.addEventListener('click', () => {
                 auth.signOut().then(() => {
                     window.location.href = 'login.html';
+                });
+            });
+            
+            footerHome.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+            
+            footerSearch.addEventListener('click', () => {
+                searchContainer.style.display = 'block';
+                searchInput.focus();
+            });
+            
+            footerOrders.addEventListener('click', () => {
+                window.location.href = 'orders.html';
+            });
+            
+            footerWishlist.addEventListener('click', () => {
+                window.location.href = 'wishlist.html';
+            });
+            
+            footerAccount.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            
+            // See All buttons
+            seeAllCategories.addEventListener('click', () => {
+                window.location.href = 'categories.html';
+            });
+            
+            seeAllFeatured.addEventListener('click', () => {
+                window.location.href = 'products.html?type=featured';
+            });
+            
+            seeAllDeals.addEventListener('click', () => {
+                window.location.href = 'products.html?type=deals';
+            });
+            
+            // Category items
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const category = item.dataset.category;
+                    window.location.href = `${category}.html`;
                 });
             });
             
@@ -1014,11 +1224,19 @@
                 if (!currentProduct) return;
                 
                 const quantity = parseInt(document.querySelector('.quantity-input').value);
-                const userId = auth.currentUser.uid;
+                const userId = auth.currentUser?.uid;
+                
+                if (!userId) {
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 // Add to cart in Firebase
                 database.ref('carts/' + userId + '/items/' + currentProduct.id).set({
                     productId: currentProduct.id,
+                    productTitle: currentProduct.title,
+                    productImage: currentProduct.image,
+                    price: currentProduct.price,
                     quantity: quantity,
                     addedAt: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
@@ -1032,8 +1250,13 @@
                 if (!currentProduct) return;
                 
                 const quantity = parseInt(document.querySelector('.quantity-input').value);
-                const userId = auth.currentUser.uid;
-                const userEmail = auth.currentUser.email;
+                const userId = auth.currentUser?.uid;
+                const userEmail = auth.currentUser?.email;
+                
+                if (!userId) {
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 // Create order in Firebase
                 const orderRef = database.ref('orders').push();
@@ -1047,21 +1270,13 @@
                     total: currentProduct.price * quantity,
                     status: 'pending',
                     createdAt: firebase.database.ServerValue.TIMESTAMP,
-                    paymentMethod: 'Cash on Delivery' // Default
+                    paymentMethod: 'Cash on Delivery'
                 }).then(() => {
                     // Send notification to Telegram
                     sendTelegramNotification(orderRef.key, currentProduct, quantity, userEmail);
                     
                     // Redirect to order success page
                     window.location.href = `order-success.html?orderId=${orderRef.key}`;
-                });
-            });
-            
-            // Category click
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const category = item.dataset.category;
-                    window.location.href = `${category}.html`;
                 });
             });
         }
